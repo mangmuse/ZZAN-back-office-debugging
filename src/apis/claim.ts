@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants";
-import { TClaim } from "@/types/claim";
+import { TClaim } from "@/types/claim.type";
 
 export const getClaims = async (page: number, limit: number) => {
   const res = await fetch(`${BASE_URL}/api/claim?page=${page}&limit=${limit}`, { cache: "no-store" });
