@@ -61,7 +61,7 @@ export const showConfirmationDialogWithInput = async (
     inputPlaceholder,
     inputValidator: (value) => {
       if (value !== inputValue) {
-        return "기프트 이름을 정확히 입력하세요.";
+        return "상품명을 정확히 입력하세요.";
       }
     },
     icon: "warning",
