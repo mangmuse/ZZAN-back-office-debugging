@@ -4,12 +4,20 @@ on:
   issues:
     types: [opened]
 
+permissions:
+  issues: write
+  contents: read
+
 jobs:
   assign:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Assign issue to creator
-        uses: actions-ecosystem/action-assign@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: ${{ github.actor }}
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees \
+          -d '{"assignees":["${{ github.actor }}"]}'
