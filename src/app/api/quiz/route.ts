@@ -34,3 +34,36 @@ export const GET = async (req: NextRequest) => {
     }
   }
 };
+
+export const POST = async (req: Request) => {
+  const supabase = createClient();
+
+  try {
+    const newQuiz = await req.json();
+
+    const { data: existingQuiz, error: existingQuizError } = await supabase
+      .from("quizzes")
+      .select("*")
+      .eq("issue_date", newQuiz.issue_date)
+      .single();
+
+    if (existingQuiz) {
+      return NextResponse.json({ error: "해당 발행일자에 이미 퀴즈가 존재합니다." }, { status: 400 });
+    }
+
+    if (existingQuizError && existingQuizError.code !== "PGRST116") {
+      throw new Error("퀴즈를 조회하는 중 오류가 발생했습니다.");
+    }
+
+    const { status, statusText } = await supabase.from("quizzes").insert(newQuiz).single();
+
+    return NextResponse.json({ status, statusText });
+  } catch (e) {
+    console.error("Unexpected error:", e);
+    if (e instanceof Error) {
+      return NextResponse.json({ error: e.message }, { status: 500 });
+    } else {
+      return NextResponse.json({ error: "알 수 없는 에러가 발생했습니다." }, { status: 500 });
+    }
+  }
+};
