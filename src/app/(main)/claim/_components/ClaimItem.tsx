@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { TableCell, TableRow } from "@/components/ui/table";
 import useClaimMutation from "@/store/queries/claim/useClaimMutation";
 import { TClaim } from "@/types/claim";
 import { formatTime } from "@/utils/formatNumber";
@@ -6,7 +7,7 @@ import { MouseEventHandler } from "react";
 
 function ClaimItem({ claim }: { claim: TClaim }) {
   const { formattedDate, formattedTime } = formatTime(claim.created_at);
-  const sentAtFormatted = claim.sent_at ? formatTime(claim.sent_at) : { formattedDate: "", formattedTime: "" };
+  const sentAtFormatted = claim.sent_at ? formatTime(claim.sent_at) : { formattedDate: "-", formattedTime: "-" };
   const { formattedDate: sentAtDate, formattedTime: sentAtTime } = sentAtFormatted;
   const { updateClaim } = useClaimMutation();
 
@@ -21,19 +22,21 @@ function ClaimItem({ claim }: { claim: TClaim }) {
   };
 
   return (
-    <li className="flex gap-1">
-      <span>{formattedDate}</span>
-      <span>{formattedTime}</span>
-      <span>{claim.nickname}</span>
-      <span>{claim.email}</span>
-      <span>{claim.gift_name}</span>
-      <span>{claim.is_sent ? "완료" : "대기중"}</span>
-      <span>{sentAtDate}</span>
-      <span>{sentAtTime}</span>
-      <Button onClick={handleChangeIsSent} size={"sm"} variant={"destructive"}>
-        상태 바꾸는 버튼
-      </Button>
-    </li>
+    <TableRow className="text-center">
+      <TableCell>{formattedDate}</TableCell>
+      <TableCell>{formattedTime}</TableCell>
+      <TableCell>{claim.nickname}</TableCell>
+      <TableCell>{claim.email}</TableCell>
+      <TableCell>{claim.gift_name}</TableCell>
+      <TableCell>{claim.is_sent ? "완료" : "대기중"}</TableCell>
+      <TableCell>{sentAtDate}</TableCell>
+      <TableCell>{sentAtTime}</TableCell>
+      <TableCell>
+        <Button onClick={handleChangeIsSent} size={"sm"} variant={"destructive"}>
+          상태 바꾸는 버튼
+        </Button>
+      </TableCell>
+    </TableRow>
   );
 }
 

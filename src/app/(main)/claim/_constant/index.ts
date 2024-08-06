@@ -1,1 +1,1 @@
-export const CLAIM_PAGE_LIMIT = 5;
+export const CLAIM_PAGE_LIMIT = 15;
