@@ -1,8 +1,9 @@
 "use client";
 
 import GiftList from "@/app/(main)/gift/_components/GiftList";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import useGiftsQuery from "@/store/queries/gift/useGiftsQuery";
+import Link from "next/link";
 
 function GiftContainer() {
   const { data: gifts } = useGiftsQuery();
@@ -10,9 +11,9 @@ function GiftContainer() {
   return (
     <div>
       <div className="flex justify-end">
-        <Button className="text-xl self-end" variant={"outline"}>
-          +
-        </Button>
+        <Link href="/gift/write" className={buttonVariants({ variant: "default" })}>
+          상품 추가
+        </Link>
       </div>
       {gifts && <GiftList gifts={gifts} />}
     </div>
