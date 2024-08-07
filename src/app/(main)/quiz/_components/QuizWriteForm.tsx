@@ -8,15 +8,20 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import ModalDialog from "@/components/ModalDialog";
+import { TQuiz } from "@/types/quiz";
 
-function QuizWriteForm() {
+type QuizWriteFormProps = {
+  previousContent?: TQuiz;
+};
+
+function QuizWriteForm({ previousContent }: QuizWriteFormProps) {
   const router = useRouter();
-  const { addQuiz } = useQuizMutation();
+  const { addQuiz, updateQuiz } = useQuizMutation();
 
-  const [question, setQuestion] = useState<string>("");
-  const [explanation, setExplanation] = useState<string>("");
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [issueDate, setIssueDate] = useState<string>("");
+  const [question, setQuestion] = useState<string>(previousContent?.question || "");
+  const [explanation, setExplanation] = useState<string>(previousContent?.explanation || "");
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(previousContent?.is_correct ?? null);
+  const [issueDate, setIssueDate] = useState<string>(previousContent?.issue_date || "");
 
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
@@ -73,7 +78,11 @@ function QuizWriteForm() {
     };
 
     try {
-      await addQuiz(newQuiz);
+      if (previousContent) {
+        await updateQuiz({ ...newQuiz, quizId: previousContent.quizId });
+      } else {
+        await addQuiz(newQuiz);
+      }
     } catch (error) {
       if (error instanceof Error) {
         setAlertMessage(error.message);
