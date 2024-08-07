@@ -14,10 +14,10 @@ function QuizItem({ quiz }: { quiz: TQuiz }) {
       <TableCell>{quiz.explanation}</TableCell>
       <TableCell>{quiz.is_correct ? "O" : "X"}</TableCell>
       <TableCell>
-        <Button className="bg-blue-500">수정</Button>
+        <Button variant={"secondary"}>수정</Button>
       </TableCell>
       <TableCell>
-        <Button className="bg-red-500">삭제</Button>
+        <Button variant={"destructive"}>삭제</Button>
       </TableCell>
     </TableRow>
   );
