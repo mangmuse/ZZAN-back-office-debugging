@@ -2,20 +2,20 @@
 import { Button } from "@/components/ui/button";
 import useGiftMutation from "@/store/queries/gift/useGiftMutation";
 import { Tables } from "@/types/supabase";
-import { showConfirmationDialogWithInput, showErrorDialog, showSuccessDialog } from "@/utils/sweetAlert";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
+import { displayConfirmationDialogWithInput, displayErrorDialog, displaySuccessDialog } from "@/utils/sweetAlert";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import kebab from "/public/icons/kebab.svg";
+import DropdownMenu from "@/components/DropdownMenu";
 
 function GiftItem({ gift }: { gift: Tables<"gifts"> }) {
   const { removeGift } = useGiftMutation();
   const router = useRouter();
 
   const handleGiftDelete = async () => {
-    const result = await showConfirmationDialogWithInput(
+    const result = await displayConfirmationDialogWithInput(
       "삭제하시겠습니까?",
-      `삭제할 상품명을 입력해주세요 "${gift.gift_name}"`,
+      `삭제할 상품명을 입력해주세요\n"${gift.gift_name}"`,
       "삭제할 상품명을 입력해주세요",
       gift.gift_name
     );
@@ -23,12 +23,23 @@ function GiftItem({ gift }: { gift: Tables<"gifts"> }) {
     if (result.isConfirmed) {
       try {
         await removeGift(gift.giftId);
-        showSuccessDialog("삭제되었습니다");
+        displaySuccessDialog("삭제되었습니다");
       } catch (error) {
-        showErrorDialog("에러가 발생했습니다.", "다시 시도 해 주세요");
+        displayErrorDialog("에러가 발생했습니다.", "다시 시도 해 주세요");
       }
     }
   };
+
+  const menuItems = [
+    {
+      label: "Edit",
+      onClick: () => router.push(`/gift/edit/${gift.giftId}`)
+    },
+    {
+      label: "Delete",
+      onClick: handleGiftDelete
+    }
+  ];
 
   return (
     <li className="flex justify-center mb-6">
@@ -42,26 +53,10 @@ function GiftItem({ gift }: { gift: Tables<"gifts"> }) {
             className="object-cover w-full h-48"
           />
           <div className="absolute top-2 right-2">
-            <Menu as="div" className="relative inline-block text-left">
-              <MenuButton as={Button} variant="ghost" size="sm">
-                <span className="sr-only">Open options</span>
-                <Image src={kebab} alt="kebab_menu" width={24} height={24} />
-              </MenuButton>
-              <MenuItems className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  <MenuItem
-                    as="button"
-                    onClick={() => router.push(`/gift/edit/${gift.giftId}`)}
-                    className="text-gray-700 block px-4 py-2 text-sm"
-                  >
-                    Edit
-                  </MenuItem>
-                  <MenuItem as="button" onClick={handleGiftDelete} className="text-gray-700 block px-4 py-2 text-sm">
-                    Delete
-                  </MenuItem>
-                </div>
-              </MenuItems>
-            </Menu>
+            <DropdownMenu
+              buttonLabel={<Image src={kebab} alt="kebab_menu" width={24} height={24} />}
+              items={menuItems}
+            />
           </div>
         </div>
         <div className="px-6 py-4">

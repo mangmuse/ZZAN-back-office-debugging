@@ -10,7 +10,7 @@ function GiftContainer() {
   gifts && console.log(gifts);
   return (
     <div>
-      <div className="flex justify-end">
+      <div className="flex justify-end ">
         <Link href="/gift/write" className={buttonVariants({ variant: "default" })}>
           상품 추가
         </Link>

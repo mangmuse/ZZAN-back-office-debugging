@@ -48,7 +48,6 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json({ data: transformedGiftClaims, totalPages });
     }
   } catch (e) {
-    console.error("Unexpected error:", e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
     } else {
