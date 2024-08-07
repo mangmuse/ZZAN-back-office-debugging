@@ -2,12 +2,12 @@ import Swal, { SweetAlertOptions } from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 // 커스텀 가능한거
-export const showAlert = (options: SweetAlertOptions) => {
+export const displayAlert = (options: SweetAlertOptions) => {
   return Swal.fire(options);
 };
 
 // 확인
-export const showConfirmationDialog = async (title: string, text: string) => {
+export const displayConfirmationDialog = async (title: string, text: string) => {
   return Swal.fire({
     title,
     text,
@@ -19,7 +19,7 @@ export const showConfirmationDialog = async (title: string, text: string) => {
 };
 
 // 경고
-export const showWarningDialog = (title: string, text: string) => {
+export const displayWarningDialog = (title: string, text: string) => {
   return Swal.fire({
     icon: "warning",
     title,
@@ -29,7 +29,7 @@ export const showWarningDialog = (title: string, text: string) => {
 };
 
 // 성공
-export const showSuccessDialog = (title: string) => {
+export const displaySuccessDialog = (title: string) => {
   return Swal.fire({
     icon: "success",
     title,
@@ -38,7 +38,7 @@ export const showSuccessDialog = (title: string) => {
 };
 
 // 에러
-export const showErrorDialog = (title: string, text: string) => {
+export const displayErrorDialog = (title: string, text: string) => {
   return Swal.fire({
     icon: "error",
     title,
@@ -48,7 +48,8 @@ export const showErrorDialog = (title: string, text: string) => {
 };
 
 // 기프티콘 삭제용
-export const showConfirmationDialogWithInput = async (
+
+export const displayConfirmationDialogWithInput = async (
   title: string,
   text: string,
   inputPlaceholder: string,
@@ -56,7 +57,7 @@ export const showConfirmationDialogWithInput = async (
 ) => {
   return Swal.fire({
     title,
-    text,
+    html: text.replace("\n", "<br />"),
     input: "text",
     inputPlaceholder,
     inputValidator: (value) => {
@@ -69,4 +70,32 @@ export const showConfirmationDialogWithInput = async (
     confirmButtonText: "확인",
     cancelButtonText: "취소"
   });
+};
+
+// 포인트 추가 폼
+export const displayAddPointsDialog = async (nickname: string) => {
+  const { value: formValues } = await Swal.fire({
+    title: "포인트 추가",
+    html: `
+      <input id="points" class="swal2-input" placeholder="추가할 포인트" type="number" min="1" />
+      <input id="reason" class="swal2-input" placeholder="추가 사유" type="text" />
+    `,
+    confirmButtonText: "추가",
+    focusConfirm: false,
+    preConfirm: () => {
+      const points = (document.getElementById("points") as HTMLInputElement).value;
+      const reason = (document.getElementById("reason") as HTMLInputElement).value;
+      if (!points || !reason) {
+        Swal.showValidationMessage("모든 필드를 입력해주세요.");
+        return false;
+      }
+      return { points, reason };
+    },
+    icon: "info",
+    inputAttributes: {
+      autocapitalize: "off"
+    }
+  });
+
+  return formValues;
 };

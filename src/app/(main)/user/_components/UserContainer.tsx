@@ -6,7 +6,7 @@ import { USER_PAGE_LIMIT } from "@/app/(main)/user/constant";
 import { TUser } from "@/types/user.type";
 import UserItem from "@/app/(main)/user/_components/UserItem";
 
-const userHeaders = ["ID", "Email", "닉네임", "Provider", "Total Point", "Current Point", "Role"];
+const userHeaders = ["ID", "Email", "닉네임", "Provider", "Total Point", "Current Point", "Role", ""];
 
 function UserContainer() {
   return (
