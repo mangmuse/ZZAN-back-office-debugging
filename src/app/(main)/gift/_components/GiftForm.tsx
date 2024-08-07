@@ -7,7 +7,12 @@ import useGiftMutation from "@/store/queries/gift/useGiftMutation";
 import { TFormData, TGiftCategory } from "@/types/gift.type";
 import { CATEGORIES } from "@/app/(main)/gift/constants";
 import { Tables } from "@/types/supabase";
-import { showConfirmationDialog, showErrorDialog, showSuccessDialog, showWarningDialog } from "@/utils/sweetAlert";
+import {
+  displayConfirmationDialog,
+  displayErrorDialog,
+  displaySuccessDialog,
+  displayWarningDialog
+} from "@/utils/sweetAlert";
 import { useRouter } from "next/navigation";
 
 type GiftFormProps = {
@@ -63,7 +68,7 @@ function GiftForm({ previousGift }: GiftFormProps) {
   };
 
   const handleCancel = async () => {
-    const result = await showConfirmationDialog("취소하시겠습니까?", "작성 중인 내용이 사라집니다.");
+    const result = await displayConfirmationDialog("취소하시겠습니까?", "작성 중인 내용이 사라집니다.");
 
     if (result.isConfirmed) {
       router.back();
@@ -74,19 +79,19 @@ function GiftForm({ previousGift }: GiftFormProps) {
     e.preventDefault();
 
     if (!formData.gift_name || !formData.point || !formData.category || !formData.brand_name) {
-      showWarningDialog("모든 필드를 채워주세요.", "필수 필드를 모두 입력해주세요.");
+      displayWarningDialog("모든 필드를 채워주세요.", "필수 필드를 모두 입력해주세요.");
       return;
     }
 
     if (!formData.img_file && !previousGift?.img_url) {
-      showWarningDialog("이미지를 선택하세요.", "이미지를 업로드해주세요.");
+      displayWarningDialog("이미지를 선택하세요.", "이미지를 업로드해주세요.");
       return;
     }
 
     const confirmText = previousGift ? "수정하시겠습니까?" : "추가하시겠습니까?";
     const confirmTitle = previousGift ? "상품 수정" : "상품 추가";
 
-    const result = await showConfirmationDialog(confirmTitle, confirmText);
+    const result = await displayConfirmationDialog(confirmTitle, confirmText);
 
     if (result.isConfirmed) {
       const newGift = {
@@ -98,10 +103,10 @@ function GiftForm({ previousGift }: GiftFormProps) {
 
       try {
         previousGift ? await updateGift(newGift) : await addGift(newGift);
-        showSuccessDialog(`${previousGift ? "수정" : "작성"}이 완료되었습니다`);
+        displaySuccessDialog(`${previousGift ? "수정" : "작성"}이 완료되었습니다`);
         router.replace("/gift");
       } catch (error) {
-        showErrorDialog("에러가 발생했습니다.", "다시 시도 해 주세요");
+        displayErrorDialog("에러가 발생했습니다.", "다시 시도 해 주세요");
       }
     }
   };
