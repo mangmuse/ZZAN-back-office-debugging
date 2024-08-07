@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import useClaimMutation from "@/store/queries/claim/useClaimMutation";
-import { TClaim } from "@/types/claim";
+import { TClaim } from "@/types/claim.type";
 import { formatTime } from "@/utils/formatNumber";
 import { MouseEventHandler } from "react";
 
@@ -23,6 +23,7 @@ function ClaimItem({ claim }: { claim: TClaim }) {
 
   return (
     <TableRow className="text-center">
+      <TableCell>{claim.user_id}</TableCell>
       <TableCell>{formattedDate}</TableCell>
       <TableCell>{formattedTime}</TableCell>
       <TableCell>{claim.nickname}</TableCell>

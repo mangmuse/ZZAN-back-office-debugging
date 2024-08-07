@@ -1,14 +1,10 @@
 import ClaimItem from "@/app/(main)/claim/_components/ClaimItem";
 import TableHeaderCell from "@/app/(main)/claim/_components/TableHeaderCell";
-import { TClaim } from "@/types/claim";
+import { TClaim } from "@/types/claim.type";
 
 type ClaimListProps = {
   claims: TClaim[];
 };
-
-// const TableHeaderCell = ({ children }: { children: React.ReactNode }) => (
-//   <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">{children}</th>
-// );
 
 function ClaimList({ claims }: ClaimListProps) {
   return (
@@ -16,6 +12,7 @@ function ClaimList({ claims }: ClaimListProps) {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
+            <TableHeaderCell>ID</TableHeaderCell>
             <TableHeaderCell>신청 날짜</TableHeaderCell>
             <TableHeaderCell>신청 시간</TableHeaderCell>
             <TableHeaderCell>닉네임</TableHeaderCell>
