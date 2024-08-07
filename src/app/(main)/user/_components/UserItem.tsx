@@ -4,7 +4,7 @@ import DropdownMenu from "@/components/DropdownMenu";
 import { displayConfirmationDialog } from "@/utils/sweetAlert";
 import useUserMutation from "@/store/queries/user/useUserMutation";
 import clsx from "clsx";
-import { displayAddPointsDialog } from "@/utils/sweetAlert"; // 새로 정의한 함수 임포트
+import { displayAddPointsDialog } from "@/utils/sweetAlert";
 import { useState } from "react";
 
 type UserItemProps = {
@@ -32,8 +32,6 @@ function UserItem({ user }: UserItemProps) {
 
       if (isConfirmed) {
         updateUserPoint({ userId: user.userId, points, reason });
-
-        // await addPoints({ userId: user.userId, points: pointsNumber, reason });
       }
     }
   };
