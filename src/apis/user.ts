@@ -48,7 +48,6 @@ export const unblockUser = async (userId: Tables<"users">["userId"]) => {
 };
 export const patchUserPoint = async (pointAction: TUserPointAction) => {
   console.log(pointAction);
-  console.log("이건 apis에서나온거");
   const res = await fetch(`${BASE_URL}/api/user/point/${pointAction.userId}`, {
     method: "PATCH",
     headers: {
