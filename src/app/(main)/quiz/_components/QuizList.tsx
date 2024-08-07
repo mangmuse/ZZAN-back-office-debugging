@@ -18,7 +18,6 @@ function QuizList({ quizzes }: QuizListProps) {
             <TableHeaderCell>해설</TableHeaderCell>
             <TableHeaderCell>정답</TableHeaderCell>
             <TableHeaderCell>수정</TableHeaderCell>
-            <TableHeaderCell>삭제</TableHeaderCell>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">

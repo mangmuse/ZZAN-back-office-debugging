@@ -1,8 +1,9 @@
-import { TQuizzesResponse } from "@/types/quiz";
+import { TQuiz, TQuizzesResponse } from "@/types/quiz";
 import { Tables } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postQuiz } from "@/apis/quiz";
+import { postQuiz, patchQuiz } from "@/apis/quiz";
+import { TStatusResponse } from "@/types/index.type";
 
 const useQuizMutation = () => {
   const router = useRouter();
@@ -18,7 +19,17 @@ const useQuizMutation = () => {
     }
   });
 
-  return { addQuiz };
+  const { mutateAsync: updateQuiz } = useMutation<TStatusResponse, Error, Partial<TQuiz>>({
+    mutationFn: (updatedQuiz) => patchQuiz(updatedQuiz),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["quizzes"]
+      });
+      router.push("/quiz");
+    }
+  });
+
+  return { addQuiz, updateQuiz };
 };
 
 export default useQuizMutation;
