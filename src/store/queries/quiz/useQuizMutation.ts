@@ -3,7 +3,7 @@ import { Tables } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postQuiz, patchQuiz } from "@/apis/quiz";
-import { TStatusResponse } from "@/types";
+import { TStatusResponse } from "@/types/index.type";
 
 const useQuizMutation = () => {
   const router = useRouter();
