@@ -3,18 +3,15 @@ import { TQuiz } from "@/types/quiz";
 import { Tables } from "@/types/supabase";
 
 export const getQuiz = async (quizId: TQuiz["quizId"]) => {
-  console.log("getQuiz quizId: ", quizId);
   const res = await fetch(`${BASE_URL}/api/quiz/${quizId}`, {
     cache: "no-store"
   });
-  console.log("getQuiz res: ", res);
   if (!res.ok) {
     const errorData = await res.json();
     const errorMessage = errorData.error || "퀴즈 정보를 가져오는 데 실패했습니다.";
     throw new Error(errorMessage);
   }
   const quiz = await res.json();
-  console.log("getQuiz quiz: ", quiz);
   return quiz;
 };
 
