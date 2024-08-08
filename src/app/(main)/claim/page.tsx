@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 function ClaimPage() {
   return (
-    <main className="p-10">
+    <main className="p-5">
       <ClaimContainer />
     </main>
   );
