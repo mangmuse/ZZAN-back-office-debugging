@@ -1,41 +1,39 @@
 import { RECENT_DAYS } from "@/constants";
-import { getStartDate } from "@/utils/getDate";
+import { getStartDate, getTimeRange } from "@/utils/getDate";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import dayjs from "dayjs";
 
 export const GET = async () => {
-  console.log("asd");
   const supabase = createClient();
 
   try {
     const startDate = getStartDate(RECENT_DAYS);
+    const { endOfDayUTC } = getTimeRange();
 
     const { data: knowhowData, error: knowhowError } = await supabase
       .from("knowhow_comments")
       .select("created_at")
-      .gte("created_at", startDate);
+      .gte("created_at", startDate)
+      .lt("created_at", endOfDayUTC);
+
+    if (knowhowError) {
+      throw new Error("노하우 댓글 목록을 받아오지 못했습니다");
+    }
 
     const { data: voteData, error: voteError } = await supabase
       .from("vote_comments")
       .select("created_at")
-      .gte("created_at", startDate);
+      .gte("created_at", startDate)
+      .lt("created_at", endOfDayUTC);
 
-    if (knowhowError) {
-      console.log(knowhowError);
-      throw new Error("Knowhow 댓글 목록을 받아오지 못했습니다");
-    }
-    console.log(knowhowData);
     if (voteError) {
       console.log(voteError);
-      throw new Error("Vote 댓글 목록을 받아오지 못했습니다");
+      throw new Error("투표 댓글 목록을 받아오지 못했습니다");
     }
-    console.log(voteData);
-    const combinedData = [...(knowhowData || []), ...(voteData || [])];
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      return date.toISOString().split("T")[0];
+      return dayjs().subtract(i, "day").format("YYYY-MM-DD");
     }).reverse();
 
     const commentCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
@@ -43,16 +41,22 @@ export const GET = async () => {
       return acc;
     }, {} as Record<string, number>);
 
-    combinedData.forEach((comment: { created_at: string }) => {
-      const date = new Date(comment.created_at).toISOString().split("T")[0];
+    knowhowData!.forEach((comment: { created_at: string }) => {
+      const date = dayjs(comment.created_at).format("YYYY-MM-DD");
       if (commentCounts[date] !== undefined) {
         commentCounts[date]++;
       }
     });
-    console.log(commentCounts);
+
+    voteData!.forEach((comment: { created_at: string }) => {
+      const date = dayjs(comment.created_at).format("YYYY-MM-DD");
+      if (commentCounts[date] !== undefined) {
+        commentCounts[date]++;
+      }
+    });
+
     return NextResponse.json(commentCounts);
   } catch (e) {
-    console.log(e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
     } else {

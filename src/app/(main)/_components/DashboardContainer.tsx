@@ -13,7 +13,6 @@ import QuizPieChart from "@/app/(main)/_components/QuizPieChart/QuizPieChart";
 function DashboardContainer() {
   const [selectedTab, setSelectedTab] = useState<TTabType>(TABS.SIGNUPS);
   const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
-
   const handleTabClick = (tab: TTabType) => {
     setSelectedTab(tab);
   };
@@ -31,7 +30,7 @@ function DashboardContainer() {
         </CardContent>
       </Card>
 
-      <Card className="flex flex-col w-[600px] h-full gap-5 self-end">
+      <Card className="flex flex-col w-[600px] h-[546px] gap-5 self-end">
         <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         <QuizPieChart selectedDate={selectedDate} />
       </Card>
