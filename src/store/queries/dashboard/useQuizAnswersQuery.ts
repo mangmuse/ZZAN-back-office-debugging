@@ -1,15 +1,15 @@
 import { getQuizAnswers } from "@/apis/dashboard";
-import { useQuery } from "@tanstack/react-query";
+import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
-type TQuizAnswersResponse = {
+export type TQuizAnswersResponse = {
   date: string;
   correct: number;
   incorrect: number;
 };
 
-const useQuizAnswersQuery = (date: string) => {
-  return useQuery<TQuizAnswersResponse, Error, string>({
-    queryKey: ["quizAnswers", { date }],
+const useQuizAnswersQuery = (date: string): UseQueryResult<TQuizAnswersResponse, Error> => {
+  return useQuery<TQuizAnswersResponse, Error>({
+    queryKey: ["quizAnswers", date],
     queryFn: () => getQuizAnswers(date)
   });
 };
