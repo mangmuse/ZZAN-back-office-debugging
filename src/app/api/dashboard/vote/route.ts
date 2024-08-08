@@ -3,7 +3,7 @@ import { getStartDate } from "@/utils/getDate";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest): Promise<NextResponse> => {
+export const GET = async () => {
   const supabase = createClient();
 
   try {

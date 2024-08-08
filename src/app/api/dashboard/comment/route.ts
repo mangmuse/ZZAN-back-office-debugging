@@ -1,9 +1,9 @@
 import { RECENT_DAYS } from "@/constants";
 import { getStartDate } from "@/utils/getDate";
 import { createClient } from "@/utils/supabase/server";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest): Promise<NextResponse> => {
+export const GET = async () => {
   console.log("asd");
   const supabase = createClient();
 

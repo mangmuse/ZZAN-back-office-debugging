@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 const useCommentCountQuery = () => {
   return useQuery<Record<string, number>, Error>({
     queryKey: ["commentCount"],
-    queryFn: () => getCommentCount()
+    queryFn: getCommentCount
   });
 };
 
