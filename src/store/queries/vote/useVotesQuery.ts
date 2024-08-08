@@ -1,10 +1,10 @@
 import { getVotes } from "@/apis/vote";
 import { useQuery } from "@tanstack/react-query";
 
-const useVotesQuery = (page: number, pageNumber: number) => {
+const useVotesQuery = (page: number, limit: number, selectedSearchOption: string, searchKeyword: string) => {
   return useQuery({
-    queryKey: ["votes", { page, pageNumber }],
-    queryFn: () => getVotes(page, pageNumber)
+    queryKey: ["votes", { page, limit, selectedSearchOption, searchKeyword }],
+    queryFn: () => getVotes(page, limit, selectedSearchOption, searchKeyword)
   });
 };
 
