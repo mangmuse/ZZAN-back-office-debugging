@@ -84,3 +84,13 @@ export const getTodayCommentCount = async () => {
   console.log(data);
   return data;
 };
+
+export const getCumulativeSignupCount = async () => {
+  const res = await fetch(`${BASE_URL}/api/dashboard/cumulative/signup`);
+  if (!res.ok) {
+    throw new Error();
+  }
+  const data = await res.json();
+  console.log(data);
+  return data;
+};
