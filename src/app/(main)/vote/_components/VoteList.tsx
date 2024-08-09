@@ -16,7 +16,7 @@ function VoteList({ votes }: VoteListProps) {
             <TableHeaderCell>작성 일시</TableHeaderCell>
             <TableHeaderCell>제목</TableHeaderCell>
             <TableHeaderCell>작성자 닉네임</TableHeaderCell>
-            <TableHeaderCell>게시 중지</TableHeaderCell>
+            <TableHeaderCell>게시글 규제</TableHeaderCell>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">

@@ -1,13 +1,26 @@
-import { Button } from "@/components/ui/button";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { TKnowhow } from "@/types/knowhow.type";
-import { formatTime } from "@/utils/formatNumber";
+import { useState } from "react";
 import Link from "next/link";
+import { TableCell, TableRow } from "@/components/ui/table";
+import useKnowhowMutation from "@/store/queries/knowhow/useKnowhowMutation";
+import { formatTime } from "@/utils/formatNumber";
+import BanToggleButton from "@/components/BanToggleButton";
+import { TKnowhow } from "@/types/knowhow.type";
 
 function KnowhowItem({ knowhow }: { knowhow: TKnowhow }) {
   const { formattedDate } = formatTime(knowhow.created_at);
 
+  const { updateKnowhow } = useKnowhowMutation();
+  const [isBanned, setIsBanned] = useState(knowhow.is_banned);
+
   const knowhowUrl = `${process.env.NEXT_PUBLIC_ZZAN_BASE_URL}/boards/knowhow/${knowhow.knowhow_postId}`;
+
+  const handleToggleBan = async (newBanStatus: boolean) => {
+    await updateKnowhow({
+      knowhow_postId: knowhow.knowhow_postId,
+      is_banned: newBanStatus
+    });
+    setIsBanned(newBanStatus);
+  };
 
   return (
     <TableRow className="text-center">
@@ -22,7 +35,7 @@ function KnowhowItem({ knowhow }: { knowhow: TKnowhow }) {
       </TableCell>
       <TableCell>{knowhow.users.nickname}</TableCell>
       <TableCell>
-        <Button variant={"destructive"}>게시 중지</Button>
+        <BanToggleButton isBanned={isBanned} onToggleBan={handleToggleBan} />
       </TableCell>
     </TableRow>
   );
