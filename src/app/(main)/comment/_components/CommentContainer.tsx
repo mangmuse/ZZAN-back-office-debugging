@@ -9,10 +9,12 @@ import { TComment } from "@/types/comment";
 const commentHeader = ["ID", "POST ID", "TYPE", "작성 날짜", "작성 시간", "닉네임", "내용", "게시 상태", ""];
 
 function CommentContainer() {
+  const query = useCommentsQuery;
+
   return (
     <TableContainer<TComment>
       useQuery={(page, limit, selectedSearchOption, searchKeyword) =>
-        useCommentsQuery(page, limit, selectedSearchOption, searchKeyword)
+        query(page, limit, selectedSearchOption, searchKeyword)
       }
       renderRow={(comment: TComment) => <CommentItem key={comment.comment_id} comment={comment} />}
       headers={commentHeader}
