@@ -26,19 +26,19 @@ export const GET = async () => {
       return dayjs().subtract(i, "day").format("YYYY-MM-DD");
     }).reverse();
 
-    const signupCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
+    const postCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
       acc[date] = 0;
       return acc;
     }, {} as Record<string, number>);
 
-    data!.forEach((user: { created_at: string }) => {
-      const date = dayjs(user.created_at).format("YYYY-MM-DD");
-      if (signupCounts[date] !== undefined) {
-        signupCounts[date]++;
+    data!.forEach((post: { created_at: string }) => {
+      const date = dayjs(post.created_at).format("YYYY-MM-DD");
+      if (postCounts[date] !== undefined) {
+        postCounts[date]++;
       }
     });
 
-    return NextResponse.json(signupCounts);
+    return NextResponse.json(postCounts);
   } catch (e) {
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
