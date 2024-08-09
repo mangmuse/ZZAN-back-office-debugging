@@ -19,7 +19,7 @@ export const GET = async () => {
 
     if (error) {
       console.log(error);
-      throw new Error("유저 목록을 받아오지 못했습니다");
+      throw new Error("게시글 목록을 받아오지 못했습니다");
     }
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
