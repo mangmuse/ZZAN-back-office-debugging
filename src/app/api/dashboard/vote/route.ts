@@ -19,26 +19,26 @@ export const GET = async () => {
 
     if (error) {
       console.log(error);
-      throw new Error("유저 목록을 받아오지 못했습니다");
+      throw new Error("소비평가 목록을 받아오지 못했습니다");
     }
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
       return dayjs().subtract(i, "day").format("YYYY-MM-DD");
     }).reverse();
 
-    const signupCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
+    const voteCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
       acc[date] = 0;
       return acc;
     }, {} as Record<string, number>);
 
     data!.forEach((user: { created_at: string }) => {
       const date = dayjs(user.created_at).format("YYYY-MM-DD");
-      if (signupCounts[date] !== undefined) {
-        signupCounts[date]++;
+      if (voteCounts[date] !== undefined) {
+        voteCounts[date]++;
       }
     });
 
-    return NextResponse.json(signupCounts);
+    return NextResponse.json(voteCounts);
   } catch (e) {
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
