@@ -1,7 +1,7 @@
 "use client";
 
 import KnowhowList from "@/app/(main)/knowhow/_components/KnowhowList";
-import { KNOWHOW_PAGE_LIMIT } from "@/app/(main)/knowhow/_constant";
+import { KNOWHOW_PAGE_LIMIT, POST_SELECT_ITEMS } from "@/app/(main)/knowhow/_constant";
 import PaginationContainer from "@/components/PaginationContainer";
 import useKnowhowsQuery from "@/store/queries/knowhow/useKnowhowsQuery";
 import { useState } from "react";
@@ -43,6 +43,7 @@ function KnowhowContainer() {
         onSearchOptionChange={handleSearchOptionChange}
         onSearchKeywordChange={handleSearchKeywordChange}
         onSearch={handleSearch}
+        selectItems={POST_SELECT_ITEMS}
       />
       {isLoading ? (
         <p>로딩 중 입니다.</p>
