@@ -1,13 +1,26 @@
-import { Button } from "@/components/ui/button";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { TVote } from "@/types/vote.type";
-import { formatTime } from "@/utils/formatNumber";
+import { useState } from "react";
 import Link from "next/link";
+import { TableCell, TableRow } from "@/components/ui/table";
+import useVoteMutation from "@/store/queries/vote/useVoteMutation";
+import { formatTime } from "@/utils/formatNumber";
+import BanToggleButton from "@/components/BanToggleButton";
+import { TVote } from "@/types/vote.type";
 
 function VoteItem({ vote }: { vote: TVote }) {
   const { formattedDate } = formatTime(vote.created_at);
 
+  const { updateVote } = useVoteMutation();
+  const [isBanned, setIsBanned] = useState(vote.is_banned);
+
   const voteUrl = `${process.env.NEXT_PUBLIC_ZZAN_BASE_URL}/boards/votes/${vote.vote_postId}`;
+
+  const handleToggleBan = async (newBanStatus: boolean) => {
+    await updateVote({
+      vote_postId: vote.vote_postId,
+      is_banned: newBanStatus
+    });
+    setIsBanned(newBanStatus);
+  };
 
   return (
     <TableRow className="text-center">
@@ -22,7 +35,7 @@ function VoteItem({ vote }: { vote: TVote }) {
       </TableCell>
       <TableCell>{vote.users.nickname}</TableCell>
       <TableCell>
-        <Button variant={"destructive"}>게시 중지</Button>
+        <BanToggleButton isBanned={isBanned} onToggleBan={handleToggleBan} />
       </TableCell>
     </TableRow>
   );
