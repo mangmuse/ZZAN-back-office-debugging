@@ -5,13 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { useLoginMutation } from "@/store/queries/auth/useLoginMutation";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { loginMutation } = useLoginMutation();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    await loginMutation({ email, password });
   };
 
   return (
