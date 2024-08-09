@@ -29,9 +29,9 @@ function QuizPieChart({ selectedDate }: QuizPieChartProps) {
       : [{ name: "No Data", value: 1, fill: EMPTY_COLOR }];
 
   return (
-    <article className="flex flex-col items-center justify-center p-4 w-full">
+    <article className="flex flex-col items-center justify-center p-4 w-full h-full">
       {isPending || !data ? (
-        <div className="flex items-center justify-center w-full h-[250px]">
+        <div className="flex items-center justify-center w-full ">
           <LoadingSpinner color="text-blue-500" />
         </div>
       ) : (

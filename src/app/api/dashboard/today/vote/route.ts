@@ -17,12 +17,12 @@ export const GET = async () => {
 
     if (error) {
       console.log(error);
-      throw new Error("유저 목록을 받아오지 못했습니다");
+      throw new Error("소비평가 목록을 받아오지 못했습니다");
     }
 
-    const signupCount = data ? data.length : 0;
+    const voteCount = data ? data.length : 0;
 
-    return NextResponse.json(signupCount);
+    return NextResponse.json(voteCount);
   } catch (e) {
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });

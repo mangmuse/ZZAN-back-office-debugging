@@ -36,8 +36,9 @@ function CustomBarChart({ useQuery, title = "", description = "", label, selecte
 
   const chartData = counts
     ? Object.keys(counts).map((date: string, index: number) => ({
-        date: index.toString(),
-        value: counts[date]
+        date: dayjs(date).format("YYYY.MM.DD"),
+        value: counts[date],
+        index
       }))
     : [];
 
@@ -60,17 +61,9 @@ function CustomBarChart({ useQuery, title = "", description = "", label, selecte
       ) : (
         <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis
-            dataKey="date"
-            tickFormatter={(tick) => {
-              const date = dayjs()
-                .subtract(maxIndex - Number(tick), "day")
-                .format("YYYY.MM.DD");
-              return date;
-            }}
-          />
+          <XAxis dataKey="date" />
           <YAxis />
-          <Tooltip content={<CustomTooltip maxIndex={maxIndex} customLabel={label} />} />
+          <Tooltip content={<CustomTooltip maxIndex={maxIndex} customLabel={label} dataKey="value" />} />
           <Bar dataKey="value" className={tabColors[selectedTab]}>
             {chartData.map((entry, index) => (
               <Cell

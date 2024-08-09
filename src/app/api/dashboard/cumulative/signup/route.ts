@@ -11,6 +11,18 @@ export const GET = async () => {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
 
+    const { data: initialData, error: initialError } = await supabase
+      .from("users")
+      .select("created_at")
+      .lt("created_at", startDate);
+
+    if (initialError) {
+      console.log(initialError);
+      throw new Error("이전 유저 목록을 받아오지 못했습니다");
+    }
+
+    let initialCount = initialData ? initialData.length : 0;
+
     const { data, error } = await supabase
       .from("users")
       .select("created_at")
@@ -26,19 +38,26 @@ export const GET = async () => {
       return dayjs().subtract(i, "day").format("YYYY-MM-DD");
     }).reverse();
 
-    const signupCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
+    const signupCounts: Record<string, number> = recentDates.reduce((acc, date) => {
       acc[date] = 0;
       return acc;
     }, {} as Record<string, number>);
 
-    data!.forEach((user: { created_at: string }) => {
+    data!.forEach((user) => {
       const date = dayjs(user.created_at).format("YYYY-MM-DD");
       if (signupCounts[date] !== undefined) {
         signupCounts[date]++;
       }
     });
 
-    return NextResponse.json(signupCounts);
+    let cumulativeCount = initialCount;
+    const cumulativeSignupCounts = recentDates.reduce((acc, date) => {
+      cumulativeCount += signupCounts[date];
+      acc[date] = cumulativeCount;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return NextResponse.json(cumulativeSignupCounts);
   } catch (e) {
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });

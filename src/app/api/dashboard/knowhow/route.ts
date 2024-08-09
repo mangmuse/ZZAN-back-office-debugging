@@ -1,15 +1,21 @@
 import { RECENT_DAYS } from "@/constants";
-import { getStartDate } from "@/utils/getDate";
+import { getStartDate, getTimeRange } from "@/utils/getDate";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import dayjs from "dayjs";
 
 export const GET = async () => {
   const supabase = createClient();
 
   try {
     const startDate = getStartDate(RECENT_DAYS);
+    const { endOfDayUTC } = getTimeRange();
 
-    const { data, error } = await supabase.from("knowhow_posts").select("created_at").gte("created_at", startDate);
+    const { data, error } = await supabase
+      .from("knowhow_posts")
+      .select("created_at")
+      .gte("created_at", startDate)
+      .lt("created_at", endOfDayUTC);
 
     if (error) {
       console.log(error);
@@ -17,9 +23,7 @@ export const GET = async () => {
     }
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      return date.toISOString().split("T")[0];
+      return dayjs().subtract(i, "day").format("YYYY-MM-DD");
     }).reverse();
 
     const postCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
@@ -28,7 +32,7 @@ export const GET = async () => {
     }, {} as Record<string, number>);
 
     data!.forEach((post: { created_at: string }) => {
-      const date = new Date(post.created_at).toISOString().split("T")[0];
+      const date = dayjs(post.created_at).format("YYYY-MM-DD");
       if (postCounts[date] !== undefined) {
         postCounts[date]++;
       }
