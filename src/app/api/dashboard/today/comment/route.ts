@@ -9,21 +9,18 @@ export const GET = async () => {
     const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
     const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
 
-    const { data: votePostComments, error: votePostError } = await supabase
-      .from("vote_comments")
-      .select("created_at")
-      .gte("created_at", startOfDay)
-      .lte("created_at", endOfDay);
+    const [votePostResult, knowhowPostResult] = await Promise.all([
+      supabase.from("vote_comments").select("created_at").gte("created_at", startOfDay).lte("created_at", endOfDay),
+
+      supabase.from("knowhow_comments").select("created_at").gte("created_at", startOfDay).lte("created_at", endOfDay)
+    ]);
+
+    const { data: votePostComments, error: votePostError } = votePostResult;
+    const { data: knowhowPostComments, error: knowhowPostError } = knowhowPostResult;
 
     if (votePostError) {
       throw new Error("투표 게시글 댓글 목록을 받아오지 못했습니다");
     }
-
-    const { data: knowhowPostComments, error: knowhowPostError } = await supabase
-      .from("knowhow_comments")
-      .select("created_at")
-      .gte("created_at", startOfDay)
-      .lte("created_at", endOfDay);
 
     if (knowhowPostError) {
       throw new Error("노하우 게시글 댓글 목록을 받아오지 못했습니다");
