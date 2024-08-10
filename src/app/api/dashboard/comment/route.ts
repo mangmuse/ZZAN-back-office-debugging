@@ -11,22 +11,18 @@ export const GET = async () => {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
 
-    const { data: knowhowData, error: knowhowError } = await supabase
-      .from("knowhow_comments")
-      .select("created_at")
-      .gte("created_at", startDate)
-      .lt("created_at", endOfDayUTC);
+    const [knowhowResult, voteResult] = await Promise.all([
+      supabase.from("knowhow_comments").select("created_at").gte("created_at", startDate).lt("created_at", endOfDayUTC),
+
+      supabase.from("vote_comments").select("created_at").gte("created_at", startDate).lt("created_at", endOfDayUTC)
+    ]);
+
+    const { data: knowhowData, error: knowhowError } = knowhowResult;
+    const { data: voteData, error: voteError } = voteResult;
 
     if (knowhowError) {
       throw new Error("노하우 댓글 목록을 받아오지 못했습니다");
     }
-
-    const { data: voteData, error: voteError } = await supabase
-      .from("vote_comments")
-      .select("created_at")
-      .gte("created_at", startDate)
-      .lt("created_at", endOfDayUTC);
-
     if (voteError) {
       throw new Error("투표 댓글 목록을 받아오지 못했습니다");
     }
