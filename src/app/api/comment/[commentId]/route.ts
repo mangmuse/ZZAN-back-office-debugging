@@ -11,14 +11,12 @@ export const PATCH = async (req: NextRequest, { params: { commentId } }: { param
 
   const commentTable = type === "knowhow" ? "knowhow_comments" : "vote_comments";
   const commentIdColumn = type === "knowhow" ? "knowhow_commentId" : "vote_commentId";
-  console.log(commentTable, commentIdColumn);
   try {
     const { status, statusText } = await supabase
       .from(commentTable)
       .update({ is_banned })
       .eq(commentIdColumn, commentId)
       .single();
-    console.log(status, statusText);
     return NextResponse.json({ status, statusText });
   } catch (e) {
     if (e instanceof Error) {

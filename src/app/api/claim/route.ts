@@ -34,7 +34,6 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json({ data: [], totalPages: 0 });
     }
   } catch (e) {
-    console.error("Error:", e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
     } else {

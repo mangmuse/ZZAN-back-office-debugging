@@ -16,7 +16,6 @@ export const GET = async () => {
       .lte("created_at", endOfDay);
 
     if (votePostError) {
-      console.log(votePostError);
       throw new Error("투표 게시글 댓글 목록을 받아오지 못했습니다");
     }
 

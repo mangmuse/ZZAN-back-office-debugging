@@ -11,7 +11,6 @@ export const getVotes = async (page: number, limit: number, selectedSearchOption
 };
 
 export const patchVote = async (vote: Partial<TVote>) => {
-  console.log("patch vote");
   const res = await fetch(`${BASE_URL}/api/vote/${vote.vote_postId}`, {
     method: "PATCH",
     headers: {

@@ -10,8 +10,8 @@ interface SearchBarProps {
   onSearch: () => void;
   selectItems: { value: string; label: string }[];
   selectPlaceholder?: string;
-  inputPlaceholder?: string; //
-  className?: string; //
+  inputPlaceholder?: string;
+  className?: string;
 }
 
 function SearchBar({
@@ -20,7 +20,7 @@ function SearchBar({
   onSearchOptionChange,
   onSearchKeywordChange,
   onSearch,
-  selectItems = [], //
+  selectItems = [],
   selectPlaceholder = "검색 옵션을 선택하세요",
   inputPlaceholder = "검색어를 입력하세요",
   className = ""

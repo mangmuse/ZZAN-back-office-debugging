@@ -17,7 +17,6 @@ export const GET = async () => {
       .lt("created_at", startDate);
 
     if (initialError) {
-      console.log(initialError);
       throw new Error("이전 유저 목록을 받아오지 못했습니다");
     }
 
@@ -30,7 +29,6 @@ export const GET = async () => {
       .lt("created_at", endOfDayUTC);
 
     if (error) {
-      console.log(error);
       throw new Error("유저 목록을 받아오지 못했습니다");
     }
 

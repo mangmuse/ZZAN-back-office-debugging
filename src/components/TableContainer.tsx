@@ -51,7 +51,7 @@ function TableContainer<T>({ useQuery, renderRow, headers, pageLimit, searchOpti
 
   const handleSearch = () => {
     setSearchParams({ option: selectedSearchOption, keyword: searchKeyword });
-    setPage(1); // 검색 시 페이지를 1로 초기화
+    setPage(1);
   };
 
   return (

@@ -15,7 +15,6 @@ export const getClaims = async (
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -31,6 +30,5 @@ export const patchClaim = async (claim: Partial<TClaim>) => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };

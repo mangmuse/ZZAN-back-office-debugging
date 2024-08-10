@@ -7,7 +7,6 @@ import Link from "next/link";
 
 function GiftContainer() {
   const { data: gifts } = useGiftsQuery();
-  gifts && console.log(gifts);
   return (
     <div>
       <div className="flex justify-end ">

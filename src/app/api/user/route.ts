@@ -28,7 +28,6 @@ export const GET = async (req: NextRequest) => {
     const { data: users, error, count } = await query;
 
     if (error) {
-      console.log(error);
       throw new Error("유저 목록을 받아오지 못했습니다");
     }
 

@@ -27,7 +27,6 @@ export const PATCH = async (
       .single();
 
     if (userError) {
-      console.log(userError);
       throw new Error(`사용자 정보 조회 실패: ${userError.message}`);
     }
 
@@ -40,7 +39,6 @@ export const PATCH = async (
       .eq("userId", userId);
 
     if (updateUserError) {
-      console.log(updateUserError);
       throw new Error(`사용자 포인트 업데이트 실패: ${updateUserError.message}`);
     }
 

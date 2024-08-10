@@ -20,7 +20,6 @@ export const GET = async (req: NextRequest) => {
     });
 
     if (searchError) {
-      console.log(searchError);
       throw new Error("댓글 목록을 가져오지 못했습니다.");
     }
 
@@ -41,7 +40,6 @@ export const GET = async (req: NextRequest) => {
 
     return NextResponse.json({ data: cleanedData, totalPages });
   } catch (e) {
-    console.error(e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
     } else {

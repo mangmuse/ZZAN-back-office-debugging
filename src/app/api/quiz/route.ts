@@ -26,7 +26,6 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json({ data, totalPages });
     }
   } catch (e) {
-    console.error("Unexpected error:", e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
     } else {
@@ -59,7 +58,6 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({ status, statusText });
   } catch (e) {
-    console.error("Unexpected error:", e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
     } else {

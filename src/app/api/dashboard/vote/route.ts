@@ -18,7 +18,6 @@ export const GET = async () => {
       .lt("created_at", endOfDayUTC);
 
     if (error) {
-      console.log(error);
       throw new Error("소비평가 목록을 받아오지 못했습니다");
     }
 

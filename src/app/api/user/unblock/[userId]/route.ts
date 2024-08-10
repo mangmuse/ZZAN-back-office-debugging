@@ -14,7 +14,6 @@ export const PATCH = async (
       }
     });
     if (error) {
-      console.log(error);
       throw new Error(`사용자 업데이트 실패: ${error.message}`);
     }
     const isBlocked = user.user.user_metadata.is_blocked || null;
