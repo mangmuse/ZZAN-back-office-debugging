@@ -10,7 +10,6 @@ import BanToggleButton from "@/components/BanToggleButton";
 import useCommentMutation from "@/store/queries/comment/useCommentMutation";
 
 function CommentItem({ comment }: { comment: TComment }) {
-  console.log("asdasd");
   const { updateCommentStatus } = useCommentMutation();
   const { formattedDate, formattedTime } = formatTime(comment.created_at);
   const isKnowhow = comment.type === "knowhow";

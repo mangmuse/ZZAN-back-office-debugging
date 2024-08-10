@@ -35,8 +35,8 @@ function TableContainer<T>({ useQuery, renderRow, headers, pageLimit, searchOpti
   const { data = { data: [], totalPages: 1 }, isPending } = useQuery(
     page,
     pageLimit,
-    searchOptions ? searchParams.option : undefined,
-    searchOptions ? searchParams.keyword : undefined
+    searchParams.option,
+    searchParams.keyword
   );
 
   const handlePageChange = (newPage: number) => setPage(newPage);

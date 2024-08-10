@@ -15,8 +15,6 @@ export const getComments = async (
 };
 
 export const patchComment = async (updatedCommentStatus: TCommentBlockReq) => {
-  console.log(updatedCommentStatus);
-  console.log("asdasd");
   const res = await fetch(`${BASE_URL}/api/comment/${updatedCommentStatus.comment_id}`, {
     method: "PATCH",
     headers: {
@@ -28,12 +26,5 @@ export const patchComment = async (updatedCommentStatus: TCommentBlockReq) => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
-
-// await updateKnowhow({
-//   comment_id: comment.comment_id,
-//   type: comment.type,
-//   is_banned: newBanStatus
-// });

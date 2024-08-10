@@ -16,7 +16,6 @@ export const GET = async () => {
       .lte("created_at", endOfDay);
 
     if (error) {
-      console.log(error);
       throw new Error("유저 목록을 받아오지 못했습니다");
     }
 

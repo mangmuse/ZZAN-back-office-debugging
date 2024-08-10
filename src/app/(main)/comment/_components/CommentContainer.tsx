@@ -13,9 +13,7 @@ function CommentContainer() {
 
   return (
     <TableContainer<TComment>
-      useQuery={(page, limit, selectedSearchOption, searchKeyword) =>
-        query(page, limit, selectedSearchOption, searchKeyword)
-      }
+      useQuery={query}
       renderRow={(comment: TComment) => <CommentItem key={comment.comment_id} comment={comment} />}
       headers={commentHeader}
       pageLimit={COMMENT_PAGE_LIMIT}

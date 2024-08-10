@@ -11,28 +11,24 @@ export const GET = async () => {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
 
-    const { data: initialData, error: initialError } = await supabase
-      .from("users")
-      .select("created_at")
-      .lt("created_at", startDate);
+    const [initialResult, recentResult] = await Promise.all([
+      supabase.from("users").select("created_at").lt("created_at", startDate),
+
+      supabase.from("users").select("created_at").gte("created_at", startDate).lt("created_at", endOfDayUTC)
+    ]);
+
+    const { data: initialData, error: initialError } = initialResult;
+    const { data, error } = recentResult;
 
     if (initialError) {
-      console.log(initialError);
       throw new Error("이전 유저 목록을 받아오지 못했습니다");
     }
 
-    let initialCount = initialData ? initialData.length : 0;
-
-    const { data, error } = await supabase
-      .from("users")
-      .select("created_at")
-      .gte("created_at", startDate)
-      .lt("created_at", endOfDayUTC);
-
     if (error) {
-      console.log(error);
       throw new Error("유저 목록을 받아오지 못했습니다");
     }
+
+    let initialCount = initialData ? initialData.length : 0;
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
       return dayjs().subtract(i, "day").format("YYYY-MM-DD");

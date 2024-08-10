@@ -592,8 +592,34 @@ export type Database = {
               is_banned: boolean;
               type: string;
               nickname: string;
+              total_count: number;
             }[];
           };
+      get_combined_comments_count: {
+        Args: {
+          search_option: string;
+          search_keyword: string;
+        };
+        Returns: number;
+      };
+      get_filtered_gift_claims: {
+        Args: {
+          lim: number;
+          off: number;
+          search_option: string;
+          search_keyword: string;
+        };
+        Returns: {
+          gift_claim_id: number;
+          created_at: string;
+          is_sent: boolean;
+          gift_name: string;
+          nickname: string;
+          email: string;
+          user_id: string;
+          total_count: number;
+        }[];
+      };
       get_knowhow_posts: {
         Args: {
           search_option: string;
@@ -859,6 +885,22 @@ export type Database = {
           points_to_add: number;
         };
         Returns: undefined;
+      };
+      search_gift_claims: {
+        Args: {
+          search_option: string;
+          search_keyword: string;
+          page: number;
+          limit_value: number;
+        };
+        Returns: {
+          id: string;
+          created_at: string;
+          is_sent: boolean;
+          gift_name: string;
+          nickname: string;
+          email: string;
+        }[];
       };
     };
     Enums: {

@@ -6,7 +6,6 @@ export const getSignUpCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -16,7 +15,6 @@ export const getKnowhowCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 export const getVoteCount = async () => {
@@ -25,7 +23,6 @@ export const getVoteCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 export const getCommentCount = async () => {
@@ -34,7 +31,6 @@ export const getCommentCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -44,7 +40,6 @@ export const getQuizAnswers = async (date: string) => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -54,7 +49,6 @@ export const getTodaySignUpCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 export const getTodayKnowhowCount = async () => {
@@ -63,7 +57,6 @@ export const getTodayKnowhowCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 export const getTodayVoteCount = async () => {
@@ -72,7 +65,6 @@ export const getTodayVoteCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 export const getTodayCommentCount = async () => {
@@ -81,7 +73,6 @@ export const getTodayCommentCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -91,6 +82,5 @@ export const getCumulativeSignupCount = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
