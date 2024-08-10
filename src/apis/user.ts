@@ -2,8 +2,15 @@ import { BASE_URL } from "@/constants";
 import { Tables } from "@/types/supabase";
 import { TUserPointAction } from "@/types/user.type";
 
-export const getUsers = async (page: number, limit: number) => {
-  const res = await fetch(`${BASE_URL}/api/user?page=${page}&limit=${limit}`);
+export const getUsers = async (
+  page: number,
+  limit: number,
+  selectedSearchOption: string = "nickname",
+  searchKeyword: string
+) => {
+  const res = await fetch(
+    `${BASE_URL}/api/user?page=${page}&limit=${limit}&searchOption=${selectedSearchOption}&search=${searchKeyword}`
+  );
   if (!res.ok) {
     throw new Error();
   }

@@ -35,8 +35,8 @@ function TableContainer<T>({ useQuery, renderRow, headers, pageLimit, searchOpti
   const { data = { data: [], totalPages: 1 }, isPending } = useQuery(
     page,
     pageLimit,
-    searchOptions ? searchParams.option : undefined,
-    searchOptions ? searchParams.keyword : undefined
+    searchParams.option,
+    searchParams.keyword
   );
 
   const handlePageChange = (newPage: number) => setPage(newPage);
@@ -51,7 +51,7 @@ function TableContainer<T>({ useQuery, renderRow, headers, pageLimit, searchOpti
 
   const handleSearch = () => {
     setSearchParams({ option: selectedSearchOption, keyword: searchKeyword });
-    setPage(1);
+    setPage(1); // 검색 시 페이지를 1로 초기화
   };
 
   return (

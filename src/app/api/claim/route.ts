@@ -7,51 +7,38 @@ export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get("page") || "1", 10);
   const limit = parseInt(searchParams.get("limit") || "10", 10);
+  const searchOption = searchParams.get("searchOption") || "nickname";
+  const searchKeyword = searchParams.get("search") || "";
   const offset = (page - 1) * limit;
 
   try {
-    const {
-      data: giftClaims,
-      error,
-      count
-    } = await supabase
-      .from("gift_claims")
-      .select(
-        `
-        *,
-        gifts (gift_name),
-        users (nickname, email)
-      `,
-        { count: "exact" }
-      )
-      .order("is_sent", { ascending: true })
-      .order("created_at", { ascending: false })
-      .range(offset, offset + limit - 1);
-
-    if (error) {
-      throw new Error("기프티콘 신청 내역을 가져오지 못했습니다");
-    }
-
-    const transformedGiftClaims = giftClaims.map((claim) => {
-      const { gifts, users, ...rest } = claim;
-      return {
-        ...rest,
-        gift_name: gifts?.gift_name,
-        nickname: users?.nickname,
-        email: users?.email
-      };
+    const { data: giftClaims, error } = await supabase.rpc("get_filtered_gift_claims", {
+      lim: limit,
+      off: offset,
+      search_option: searchOption,
+      search_keyword: searchKeyword
     });
 
-    revalidatePath("/", "layout");
-    if (count) {
-      const totalPages = Math.ceil(count / limit);
-      return NextResponse.json({ data: transformedGiftClaims, totalPages });
+    if (error) {
+      throw new Error("기프티콘 신청 내역을 가져오지 못했습니다.");
+    }
+
+    if (giftClaims && giftClaims.length > 0) {
+      const totalCount = giftClaims[0].total_count;
+      const totalPages = Math.ceil(totalCount / limit);
+      const cleanedData = giftClaims.map(({ total_count, ...rest }) => rest);
+
+      revalidatePath("/");
+      return NextResponse.json({ data: cleanedData, totalPages });
+    } else {
+      return NextResponse.json({ data: [], totalPages: 0 });
     }
   } catch (e) {
+    console.error("Error:", e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 500 });
     } else {
-      return NextResponse.json({ error: "알 수 없는 에러가 발생했습니다" }, { status: 500 });
+      return NextResponse.json({ error: "알 수 없는 에러가 발생했습니다." }, { status: 500 });
     }
   }
 };
