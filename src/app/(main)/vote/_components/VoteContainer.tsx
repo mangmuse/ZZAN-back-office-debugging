@@ -6,6 +6,7 @@ import PaginationContainer from "@/components/PaginationContainer";
 import useVotesQuery from "@/store/queries/vote/useVotesQuery";
 import { useState } from "react";
 import SearchBar from "@/components/SearchBar";
+import { POST_SELECT_ITEMS } from "@/app/(main)/knowhow/_constant";
 
 function VoteContainer() {
   const [page, setPage] = useState(1);
@@ -38,6 +39,7 @@ function VoteContainer() {
         onSearchOptionChange={handleSearchOptionChange}
         onSearchKeywordChange={handleSearchKeywordChange}
         onSearch={handleSearch}
+        selectItems={POST_SELECT_ITEMS}
       />
       {isLoading ? (
         <p>로딩 중 입니다.</p>

@@ -68,6 +68,14 @@ function SidebarContainer() {
               <span className="ml-3">짠 노하우 게시글 관리 페이지</span>
             </Link>
           </li>
+          <li>
+            <Link
+              href="/comment"
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <span className="ml-3">댓글 관리 페이지</span>
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="px-3 py-4 bg-gray-50 dark:bg-gray-800 flex justify-center">
