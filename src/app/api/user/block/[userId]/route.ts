@@ -10,7 +10,6 @@ export const GET = async (
   try {
     const { data: user, error } = await supabase.auth.admin.getUserById(userId);
     if (error) {
-      console.log(error);
       throw new Error(`사용자 업데이트 실패: ${error.message}`);
     }
     return NextResponse.json(user.user.user_metadata?.is_blocked ?? null);
@@ -35,11 +34,9 @@ export const PATCH = async (
       }
     });
     if (error) {
-      console.log(error);
       throw new Error(`사용자 업데이트 실패: ${error.message}`);
     }
     const isBlocked = user.user.user_metadata.is_blocked;
-    console.log(isBlocked);
     return NextResponse.json(isBlocked);
   } catch (e) {
     if (e instanceof Error) {

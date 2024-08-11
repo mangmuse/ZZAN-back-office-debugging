@@ -18,8 +18,6 @@ const useUserMutation = () => {
         return await blockUser(userId);
       } else if (action === "unblock") {
         return await unblockUser(userId);
-      } else {
-        console.error("알 수 없는 작업입니다.");
       }
     },
     onSuccess: (data, { userId }) => {

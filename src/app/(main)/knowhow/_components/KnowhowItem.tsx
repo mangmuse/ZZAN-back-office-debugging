@@ -21,7 +21,6 @@ function KnowhowItem({ knowhow }: { knowhow: TKnowhow }) {
     });
     setIsBanned(newBanStatus);
   };
-
   return (
     <TableRow className="text-center">
       <TableCell>{knowhow.knowhow_postId}</TableCell>

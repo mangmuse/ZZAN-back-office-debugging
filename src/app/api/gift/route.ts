@@ -32,15 +32,12 @@ export const POST = async (req: NextRequest) => {
     const brandName = formData.get("brand_name") as string;
     const imgFile = formData.get("img_file") as File;
 
-    console.log({ giftName, point, category, brandName, imgFile });
-
     const bucketName = "gifts";
     const fileName = `${category}/${crypto.randomUUID()}-${imgFile.name}`;
 
     const { data, error } = await uploadFileToSupabase(supabase, bucketName, fileName, imgFile);
 
     if (error) {
-      console.log(error);
       throw new Error(error.message);
     }
 

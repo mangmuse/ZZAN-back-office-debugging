@@ -9,7 +9,6 @@ export const getGifts = async () => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -20,7 +19,6 @@ export const getGift = async (giftId: number) => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -43,7 +41,6 @@ export const postGift = async (newGift: TNewGift) => {
   }
 
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -65,7 +62,6 @@ export const patchGift = async (newGift: TNewGift) => {
   }
 
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
@@ -80,6 +76,5 @@ export const deleteGift = async (giftId: number) => {
     throw new Error();
   }
   const data = await res.json();
-  console.log(data);
   return data;
 };

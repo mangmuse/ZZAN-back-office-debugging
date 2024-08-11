@@ -2,7 +2,7 @@
 
 import TableContainer from "@/components/TableContainer";
 import useClaimsQuery from "@/store/queries/claim/useClaimsQuery";
-import { CLAIM_PAGE_LIMIT } from "@/app/(main)/claim/_constant";
+import { CLAIM_PAGE_LIMIT, CLAIM_SELECT_ITEMS } from "@/app/(main)/claim/_constant";
 import { TClaim } from "@/types/claim.type";
 import ClaimItem from "@/app/(main)/claim/_components/ClaimItem";
 
@@ -20,12 +20,14 @@ const claimHeaders = [
 ];
 
 function ClaimContainer() {
+  const query = useClaimsQuery;
   return (
-    <TableContainer
-      useQuery={useClaimsQuery}
+    <TableContainer<TClaim>
+      useQuery={query}
       renderRow={(claim: TClaim) => <ClaimItem key={claim.gift_claimId} claim={claim} />}
       headers={claimHeaders}
       pageLimit={CLAIM_PAGE_LIMIT}
+      searchOptions={CLAIM_SELECT_ITEMS}
     />
   );
 }

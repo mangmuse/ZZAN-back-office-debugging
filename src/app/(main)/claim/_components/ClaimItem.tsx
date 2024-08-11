@@ -17,7 +17,6 @@ function ClaimItem({ claim }: { claim: TClaim }) {
       ...rest,
       is_sent: !claim.is_sent
     };
-    console.log(updatedClaim);
     await updateClaim(updatedClaim);
   };
 

@@ -35,8 +35,6 @@ export const PATCH = async (req: NextRequest) => {
     const brandName = formData.get("brand_name") as string;
     const imgFile = formData.get("img_file") as File | null;
 
-    console.log({ giftId, giftName, point, category, brandName, imgFile });
-
     const updatedGift: Record<string, any> = {
       gift_name: giftName,
       point: Number(point),
@@ -51,12 +49,10 @@ export const PATCH = async (req: NextRequest) => {
       const { data, error } = await uploadFileToSupabase(supabase, bucketName, fileName, imgFile);
 
       if (error) {
-        console.log(error);
         throw new Error(error.message);
       }
 
       const img_url = `${STORAGE_BASE_URL}/${data.fullPath}`;
-      console.log(img_url);
 
       updatedGift.img_url = img_url;
     }
