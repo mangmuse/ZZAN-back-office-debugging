@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants";
-import { TQuiz } from "@/types/quiz";
+import { TQuiz } from "@/types/quiz.type";
 import { Tables } from "@/types/supabase";
 
 export const getQuiz = async (quizId: TQuiz["quizId"]) => {

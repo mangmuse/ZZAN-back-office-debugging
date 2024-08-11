@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { TQuiz } from "@/types/quiz";
+import { TQuiz } from "@/types/quiz.type";
 import { formatTime } from "@/utils/formatNumber";
 import { useRouter } from "next/navigation";
 
