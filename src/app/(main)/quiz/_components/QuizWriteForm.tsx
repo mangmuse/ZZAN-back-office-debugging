@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import ModalDialog from "@/components/ModalDialog";
-import { TQuiz } from "@/types/quiz";
+import { TQuiz } from "@/types/quiz.type";
 
 type QuizWriteFormProps = {
   previousContent?: TQuiz;

@@ -1,4 +1,4 @@
-import { TQuiz, TQuizzesResponse } from "@/types/quiz";
+import { TQuiz, TQuizzesResponse } from "@/types/quiz.type";
 import { Tables } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

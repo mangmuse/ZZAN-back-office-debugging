@@ -1,8 +1,17 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useLogoutMutation } from "@/store/queries/auth/useLogoutMutation";
 import Image from "next/image";
 import Link from "next/link";
 
 function SidebarContainer() {
+  const { logoutMutation } = useLogoutMutation();
+
+  const handleLogout = async () => {
+    await logoutMutation();
+  };
+
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen flex flex-col justify-between transform -translate-x-full sm:translate-x-0 transition-transform">
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex flex-col">
@@ -79,7 +88,11 @@ function SidebarContainer() {
         </ul>
       </div>
       <div className="px-3 py-4 bg-gray-50 dark:bg-gray-800 flex justify-center">
-        <Button className="flex items-center text-gray-900 rounded-lg dark:text-white underline" variant="link">
+        <Button
+          onClick={handleLogout}
+          className="flex items-center text-gray-900 rounded-lg dark:text-white underline"
+          variant="link"
+        >
           <span className="ml-3">로그아웃</span>
         </Button>
       </div>

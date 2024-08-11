@@ -1,6 +1,6 @@
 import TableHeaderCell from "@/app/(main)/claim/_components/TableHeaderCell";
 import QuizItem from "@/app/(main)/quiz/_components/QuizItem";
-import { TQuiz } from "@/types/quiz";
+import { TQuiz } from "@/types/quiz.type";
 
 type QuizListProps = {
   quizzes: TQuiz[];
