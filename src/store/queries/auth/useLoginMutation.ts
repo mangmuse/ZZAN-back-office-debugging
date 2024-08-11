@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logIn } from "@/apis/auth";
 import { useRouter } from "next/navigation";
+import { displayErrorDialog } from "@/utils/sweetAlert";
 
 export function useLoginMutation() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export function useLoginMutation() {
       router.push("/");
     },
     onError: (error) => {
-      console.error("로그인 중 오류 발생:", error);
+      displayErrorDialog("로그인 실패", error.message || "로그인 중 오류가 발생했습니다. 다시 시도해 주세요.");
     }
   });
 
