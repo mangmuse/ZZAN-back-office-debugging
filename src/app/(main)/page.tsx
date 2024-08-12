@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import DashboardContainer from "@/app/(main)/_components/DashboardContainer";
 
 function MainPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button variant={"destructive"} size={"sm"} asChild></Button>
+    <main className="bg-gray-100 flex min-h-screen w-full h-full flex-col items-center justify-between p-6">
+      <DashboardContainer />
     </main>
   );
 }
