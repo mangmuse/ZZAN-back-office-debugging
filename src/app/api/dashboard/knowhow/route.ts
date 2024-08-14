@@ -11,31 +11,27 @@ export const GET = async () => {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
 
-    console.log("Start Date (UTC):", startDate);
-    console.log("End of Day (UTC):", endOfDayUTC);
-
     const { data, error } = await supabase
       .from("knowhow_posts")
       .select("created_at")
       .gte("created_at", startDate)
-      .lt("created_at", endOfDayUTC);
+      .lt("created_at", endOfDayUTC)
+      .order("created_at", { ascending: true });
 
     if (error) {
       throw new Error("게시글 목록을 받아오지 못했습니다");
     }
 
-    return NextResponse.json(data);
-
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
       return dayjs().subtract(i, "day").format("YYYY-MM-DD");
     }).reverse();
 
-    const postCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
+    const postCounts: Record<string, number> = recentDates.reduce((acc, date) => {
       acc[date] = 0;
       return acc;
     }, {} as Record<string, number>);
 
-    data!.forEach((post: { created_at: string }) => {
+    data!.forEach((post) => {
       const date = dayjs(post.created_at).format("YYYY-MM-DD");
       if (postCounts[date] !== undefined) {
         postCounts[date]++;
