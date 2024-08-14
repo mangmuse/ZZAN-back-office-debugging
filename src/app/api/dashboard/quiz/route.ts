@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import dayjs from "dayjs";
+import { getStartAndEndOfDay } from "@/utils/getDate";
 
 export const GET = async (req: NextRequest) => {
   const supabase = createClient();
@@ -11,8 +12,7 @@ export const GET = async (req: NextRequest) => {
       date = dayjs().format("YYYY-MM-DD");
     }
 
-    const startOfDay = dayjs(date).startOf("day").toISOString();
-    const endOfDay = dayjs(date).endOf("day").toISOString();
+    const { startOfDay, endOfDay } = getStartAndEndOfDay();
 
     const { data: quizzes, error: quizError } = await supabase.from("quizzes").select("quizId").eq("issue_date", date);
 
