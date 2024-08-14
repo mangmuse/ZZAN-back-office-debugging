@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 
 export const GET = async () => {
   const supabase = createClient();
-  console.log("asd");
+
   try {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
