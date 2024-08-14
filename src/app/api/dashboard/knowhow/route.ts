@@ -24,7 +24,7 @@ export const GET = async () => {
       throw new Error("게시글 목록을 받아오지 못했습니다");
     }
 
-    console.log("supabase data", data);
+    return NextResponse.json(data);
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
       return dayjs().subtract(i, "day").format("YYYY-MM-DD");
