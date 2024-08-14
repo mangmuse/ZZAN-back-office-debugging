@@ -24,7 +24,7 @@ export const GET = async () => {
     return NextResponse.json({
       startDate,
       endOfDayUTC,
-      postCounts: data.length // 예시로 데이터 길이 반환
+      postCounts: data.length
     });
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
