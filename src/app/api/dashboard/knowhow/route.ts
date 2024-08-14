@@ -6,12 +6,10 @@ import dayjs from "dayjs";
 
 export const GET = async () => {
   const supabase = createClient();
-  console.log("asd");
+
   try {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
-    console.log("Start Date (UTC):", startDate);
-    console.log("End of Day (UTC):", endOfDayUTC);
 
     const { data, error } = await supabase
       .from("knowhow_posts")
@@ -22,11 +20,6 @@ export const GET = async () => {
     if (error) {
       throw new Error("게시글 목록을 받아오지 못했습니다");
     }
-    return NextResponse.json({
-      startDate,
-      endOfDayUTC,
-      postCounts: data.length
-    });
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
       return dayjs().subtract(i, "day").format("YYYY-MM-DD");
