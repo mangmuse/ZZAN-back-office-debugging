@@ -12,7 +12,7 @@ export const getStartDate = (days: number): string => {
   console.log("Start of Day UTC:", startOfDayUTC);
   return startOfDayUTC;
 };
-
+//
 export const getTimeRange = () => {
   const now = dayjs().tz("Asia/Seoul");
   const startOfDayKST = now.startOf("day");

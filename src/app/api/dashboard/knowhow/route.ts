@@ -10,6 +10,7 @@ export const GET = async () => {
   try {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
+
     const { data, error } = await supabase
       .from("knowhow_posts")
       .select("created_at")
