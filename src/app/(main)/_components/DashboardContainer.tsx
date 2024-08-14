@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import CustomBarChart from "@/app/(main)/_components/CustomBarChart/CustomBarChart";
 import { TABS, TTabType } from "@/app/(main)/_constant";
@@ -11,6 +11,7 @@ import ChartTabContainer from "@/app/(main)/_components/ChartTabContainer";
 import QuizPieChart from "@/app/(main)/_components/QuizPieChart/QuizPieChart";
 import useCumulativeSignupCountQuery from "@/store/queries/dashboard/cumulative/useCumulativeSignupCountQuery";
 import LineChartContainer from "@/app/(main)/_components/LineChartContainer";
+import { revalidateRoute } from "@/utils/revalidation";
 
 function DashboardContainer() {
   const [selectedTab, setSelectedTab] = useState<TTabType>(TABS.SIGNUPS);
@@ -21,6 +22,10 @@ function DashboardContainer() {
 
   const queryHook = useCumulativeSignupCountQuery;
   const label = getLabel(selectedTab);
+
+  useEffect(() => {
+    revalidateRoute("/", "layout");
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col gap-5">
