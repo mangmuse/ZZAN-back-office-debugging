@@ -4,14 +4,16 @@ import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const GET = async () => {
   const supabase = createClient();
 
   try {
-    const startDate = dayjs(getStartDate(RECENT_DAYS)).utc().format();
+    const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
 
     const { data, error } = await supabase
@@ -25,8 +27,9 @@ export const GET = async () => {
       throw new Error("게시글 목록을 받아오지 못했습니다");
     }
 
+    // 최근 30일의 날짜 배열 생성 (KST 기준)
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
-      return dayjs().subtract(i, "day").utc().format("YYYY-MM-DD");
+      return dayjs().subtract(i, "day").tz("Asia/Seoul").format("YYYY-MM-DD");
     }).reverse();
 
     const postCounts: Record<string, number> = recentDates.reduce((acc, date) => {
@@ -35,7 +38,7 @@ export const GET = async () => {
     }, {} as Record<string, number>);
 
     data!.forEach((post) => {
-      const date = dayjs(post.created_at).utc().format("YYYY-MM-DD");
+      const date = dayjs(post.created_at).tz("Asia/Seoul").format("YYYY-MM-DD");
       if (postCounts[date] !== undefined) {
         postCounts[date]++;
       }
