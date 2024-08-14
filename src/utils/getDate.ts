@@ -7,6 +7,7 @@ dayjs.extend(timezone);
 
 export const getStartDate = (days: number): string => {
   const date = dayjs().tz("Asia/Seoul").subtract(days, "day").startOf("day");
+
   const startOfDayUTC = date.utc().format();
   return startOfDayUTC;
 };
@@ -26,6 +27,7 @@ export const getRecentDates = (days: number): string[] => {
   const dates: string[] = [];
   for (let i = days - 1; i >= 0; i--) {
     const date = dayjs().tz("Asia/Seoul").subtract(i, "day").format("YYYY-MM-DD");
+
     dates.push(date);
   }
   return dates;
