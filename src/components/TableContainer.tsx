@@ -1,7 +1,7 @@
 "use client";
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { useState } from "react";
+import React, { useState } from "react";
 import PaginationContainer from "@/components/PaginationContainer";
 import TableHeaderCell from "@/app/(main)/claim/_components/TableHeaderCell";
 import SearchBar from "@/components/SearchBar";
@@ -14,7 +14,7 @@ type TableContainerProps<T> = {
     selectedSearchOption?: string,
     searchKeyword?: string
   ) => UseQueryResult<{ data: T[]; totalPages: number }, Error>;
-  renderRow: (item: T) => React.ReactNode;
+  renderRow: (item: T) => React.ReactElement;
   headers: string[];
   pageLimit: number;
   searchOptions?: { value: string; label: string }[];
@@ -84,7 +84,9 @@ function TableContainer<T>({ useQuery, renderRow, headers, pageLimit, searchOpti
                 ))}
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">{data.data.map(renderRow)}</tbody>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {data.data.map((item, index) => React.cloneElement(renderRow(item), { key: index }))}
+            </tbody>
           </table>
         </div>
       )}
