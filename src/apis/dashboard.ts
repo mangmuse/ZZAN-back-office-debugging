@@ -60,7 +60,7 @@ export const getTodayKnowhowCount = async () => {
   return data;
 };
 export const getTodayVoteCount = async () => {
-  const res = await fetch(`${BASE_URL}/api/dashboard/today/vote`);
+  const res = await fetch(`${BASE_URL}/api/dashboard/today/vote`, { cache: "no-store" });
   if (!res.ok) {
     throw new Error();
   }
